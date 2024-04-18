@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generate ServiceRequest Timing</title>
+</head>
+<body>
+  <h1>Generate ServiceRequest Timing</h1>
+  <label for="startDate">Start Date:</label>
+  <input type="date" id="startDate" required><br>
+
+  <label for="endDate">End Date:</label>
+  <input type="date" id="endDate" required><br>
+
+  <label for="frequency">Frequency per week:</label>
+  <input type="number" id="frequency" min="1" required><br>
+
+  <label for="duration">Duration per session (minutes):</label>
+  <input type="number" id="duration" min="1" required><br>
+
+  <button onclick="generateTiming()">Generate Timing</button>
+
+  <h2>Generated Timing:</h2>
+  <pre id="generatedTiming"></pre>
+
+  <script>
+    function generateTiming() {
+      const startDate = document.getElementById('startDate').value;
+      const endDate = document.getElementById('endDate').value;
+      const frequency = document.getElementById('frequency').value;
+      const duration = document.getElementById('duration').value;
+
+      const timingObject = {
+        repeat: {
+          boundsPeriod: {
+            start: startDate,
+            end: endDate
+          },
+          frequency: parseInt(frequency),
+          period: 7,
+          periodUnit: 'd'
+        }
+      };
+
+      const generatedTiming = JSON.stringify(timingObject, null, 2);
+      document.getElementById('generatedTiming').innerText = generatedTiming;
+    }
+  </script>
+</body>
+</html>

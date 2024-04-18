@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHIR Observation HTML Form</title>
+</head>
+<body>
+    <h1>Observation Form</h1>
+    <form>
+        <label for="subject">病人:</label>
+        <input type="text" id="subject" name="subject"  readonly><br><br>
+
+        <label for="effectiveDateTime">測量日期:</label>
+        <input type="text" id="effectiveDateTime" name="effectiveDateTime"  readonly><br><br>
+
+        <label for="value">心率(次/分):</label>
+        <input type="text" id="value" name="value" readonly><br><br>
+        
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>

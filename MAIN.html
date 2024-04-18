@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <style type="text/css">
+        #Button1 {
+            height: 43px;
+            width: 140px;
+        }
+        table, th, td {
+            border: 1px solid black;        
+        }  
+    </style>
+
+ <!--JS Document-->
+ <script src="HTTPlink.js"></script>   
+ <script src="Cookie.js"></script> 
+ <script src="AddTableEvent.js"></script> 
+
+<script>	
+var myObj;
+function callBack() { 
+    myObj= JSON.parse(ret);  //把JSON格式資料转换为 JavaScript 对象
+} 
+function showData() 
+{
+    HTTPGetData("https://fhir.tcumi.com:58443/r5/fhir/Observation?subject="+document.getElementById("ID").value);             
+	var tableStr = "<tr> <th >測量日期</th><th>數值(mm[Hg])</th></tr>";
+
+    for (i = 0; i <myObj.entry.length; i++) {
+        var trStr = "<tr>";
+
+        trStr = trStr + "<td>";
+        trStr = trStr + myObj.entry[i].resource.effectiveDateTime;
+        trStr = trStr + "</td>";
+
+        trStr = trStr + "<td>";
+        trStr = trStr + myObj.entry[i].resource.valueQuantity.value;
+        trStr = trStr + "</td>";
+
+        trStr = trStr + "</tr>";
+        tableStr = tableStr + trStr;
+    }
+  
+    document.getElementById("t1").innerHTML = tableStr;
+    addRowHandlers("t1");   // add event to table t1
+
+    document.getElementById("t1").style.visibility = "visible";
+}
+   </script>			
+
+</head>
+<body style="height: 780px">
+<h2>生理監測查詢</h2>
+      <p>
+        <h3>要搜尋的病人的ID: <input id="ID" type="text"/></h3>
+        <input id="Button1" onclick="showData();" type="button" value="搜尋" /></p>
+        <table id = "t1" style="visibility: hidden;"></table><br/>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+   
+	<script src="setting.js"></script>
+    <script src="HTTPlink.js"></script>
+ <script>
+    var myObj = {
+  "resourceType": "Observation",
+  "status": "final",
+  "category": [
+    {
+      "coding": [
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+          "code": "vital-signs",
+          "display": "Vital Signs"
+        }
+      ],
+      "text": "Vital Signs"
+    }
+  ],
+  "code": {
+    "coding": [
+      {
+        "system": "http://loinc.org",
+        "code": "8480-6",
+        "display": "Systolic blood pressure"
+      }
+    ],
+    "text": "Systolic Blood Pressure"
+  },
+  "subject": {
+    "reference": "Patient/1111"
+  },
+  "effectiveDateTime": "2023-11-11",
+  "valueQuantity": {
+    "value": 120,
+    "unit": "mmHg",
+    "system": "http://unitsofmeasure.org",
+    "code": "mm[Hg]"
+  }
+}
+     
+	 
+   function postData() {
+     /*   var data = myObj.valueQuantity.value;
+       alert(data);  */
+      // alert("aaaa");
+       myObj.subject.reference = "Patient/"+document.getElementById("id").value;
+       myObj.effectiveDateTime = document.getElementById("time").value;
+       myObj.valueQuantity.value =  document.getElementById("DFS").value;
+
+       var jsonStr = JSON.stringify(myObj);
+       alert(jsonStr);
+
+       var apiURL;
+       apiURL = FHIRrootURL + '/' + "Observation";
+      // alert(apiURL);
+       HTTPPostData(apiURL, jsonStr);
+	}
+
+</script>	
+<body style="height: 780px">
+      <h3>新增(上傳)生理監測資料</h3>
+      <p>病人ID: <input type="text" id="id" /></p>
+      <p>測量時間: <input type="text" id="time" /></p>
+      <p>收縮壓: <input type="text" id="DFS" /></p>
+      <br/>
+      <input id="Button1" onclick="postData()"  type="button" value="postData" />
+</body>
+
+</html>
